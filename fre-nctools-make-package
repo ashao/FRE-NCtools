@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # ------------------------------------------------------------------------------
 # FMS/FRE Project: Script to create the fre-nctools package
