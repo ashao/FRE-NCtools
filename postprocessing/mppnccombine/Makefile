@@ -10,6 +10,7 @@
 
 # Default compilers
 CC       := icc
+CFLAGS   := -O3 -g -traceback $(CFLAGS_SITE)
 
 # Bring in the Make settings for the site
 # Compilers may be overridden
@@ -25,7 +26,6 @@ PREFIX_SHARE_EXEC = $(PREFIX_SHARE)/bin
 
 VPATH = $(SRCDIR):.
 
-CFLAGS   := -O3 -g -traceback $(CFLAGS_SITE)
 INCLUDES := -I${NETCDF_HOME}/include
 CLIBS     := -L${NETCDF_HOME}/lib -L${HDF5_HOME}/lib -lnetcdf -lhdf5_hl -lhdf5 -lz $(CLIBS_SITE) $(STATIC)
 

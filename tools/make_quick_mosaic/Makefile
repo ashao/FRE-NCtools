@@ -12,6 +12,8 @@
 # MPICC and CC default settings
 MPICC    := mpicc
 CC       := icc
+CFLAGS   := -O3 -g -debug -traceback $(CFLAGS_SITE)
+CFLAGS_O2:= -O2 -g -debug -traceback $(CFLAGS_SITE)
 
 # Get the site specific settings, CC and MPICC may be overridden
 include ../../build.mk
@@ -26,8 +28,6 @@ PREFIX_SHARE_EXEC = $(PREFIX_SHARE)/bin
 
 VPATH = $(SRCDIR):.
 
-CFLAGS   := -O3 -traceback $(CFLAGS_SITE)
-CFLAGS_O2:= -O2 -traceback $(CFLAGS_SITE)
 INCLUDES := -I${NETCDF_HOME}/include -I$(SRCDIR)/ -I$(SRCDIR)/../shared -I$(SRCDIR)/../../shared/mosaic
 CLIBS     := -L${NETCDF_HOME}/lib -L${HDF5_HOME}/lib -lnetcdf -lhdf5_hl -lhdf5 -lz $(CLIBS_SITE) $(STATIC)
 

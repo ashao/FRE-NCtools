@@ -11,6 +11,8 @@
 # Default compilers
 CC       := icc
 FC       := ifort
+CFLAGS   := -O3 -g -traceback $(CFLAGS_SITE)
+FFLAGS   := -fltconsistency -fno-alias -stack_temps -safe_cray_ptr -ftz -assume byterecl -g -O2 -i4 -real_size 64 -traceback $(FFLAGS_SITE)
 
 # Bring in setting for the build
 # Compilers may be overridden
@@ -26,10 +28,8 @@ PREFIX_SHARE_EXEC = $(PREFIX_SHARE)/bin
 
 VPATH = $(SRCDIR):.
 
-CFLAGS   := -O3 -g -traceback $(CFLAGS_SITE)
 CLIBS    := -L${NETCDF_HOME}/lib -L${HDF5_HOME}/lib -lnetcdf -lhdf5_hl -lhdf5 -lz $(CLIBS_SITE) $(STATIC)
 
-FFLAGS   := -fltconsistency -fno-alias -stack_temps -safe_cray_ptr -ftz -assume byterecl -g -O2 -i4 -real_size 64 -traceback $(FFLAGS_SITE)
 INCLUDES := -I${NETCDF_HOME}/include
 LIBS     := -L${NETCDF_HOME}/lib -L${HDF5_HOME}/lib -lnetcdff -lnetcdf -lhdf5_hl -lhdf5 -lz $(LIBS_SITE) $(STATIC)
 
