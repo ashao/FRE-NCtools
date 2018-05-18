@@ -96,7 +96,7 @@ namelist /input/   file_names, file_name_out, use_end_time, verbose, &
        ! write (*,input)
        write (*,'(a,a)') 'NetCDF Version = ', NF90_INQ_LIBVERS()
     endif
-       
+
 
   ! error checks
     if (file_names(1)(1:1) == ' ')  &
@@ -114,7 +114,7 @@ namelist /input/   file_names, file_name_out, use_end_time, verbose, &
 !-----------------------------------------------------------------------
 !----------------- Loop through input files ----------------------------
 !-----------------------------------------------------------------------
-      
+
  do ifile = 1, MAX_FILES
       if ( file_names(ifile)(1:1) == ' ' ) exit
       if (verbose) print *, 'Processing file ',trim(file_names(ifile))
@@ -253,7 +253,7 @@ namelist /input/   file_names, file_name_out, use_end_time, verbose, &
          Vars(:)%skip        = .false.
          Vars(:)%do_avg      = .false.
          Vars(:)%do_missval  = .false.
-         Vars(:)%uses_tod    = .false. 
+         Vars(:)%uses_tod    = .false.
          max_shape = 1
          do i=1,NF90_MAX_NAME
            Vars(:)%name(i:i)=' '
@@ -273,7 +273,7 @@ namelist /input/   file_names, file_name_out, use_end_time, verbose, &
                                            dimids=Vars(ivar)%axes, natts=Vars(ivar)%natt)
             if (istat /= NF90_NOERR) call error_handler (ncode=istat)
 
-            ! Check if var uses new time_of_day axis. 
+            ! Check if var uses new time_of_day axis.
             do idim = 1,Vars(ivar)%ndim
                if (Vars(ivar)%axes(idim) .eq. dimid_tod) then
                   Vars(ivar)%uses_tod = .true.
@@ -377,13 +377,13 @@ namelist /input/   file_names, file_name_out, use_end_time, verbose, &
             if (idim == recdim) then
                 istat = NF90_DEF_DIM (ncid_out, name, NF90_UNLIMITED, dimid)
                 if (istat /= NF90_NOERR) call error_handler (ncode=istat)
-            else    
+            else
                 istat = NF90_DEF_DIM (ncid_out, name, dimlen, dimid)
                 if (istat /= NF90_NOERR) call error_handler (ncode=istat)
-            endif   
+            endif
             ! mapping between input and output dimension ids
             dimids_out(idim) = dimid
-         enddo   
+         enddo
 
        ! add axis for time bounds variable
          if (add_time_bounds) then
@@ -435,11 +435,11 @@ namelist /input/   file_names, file_name_out, use_end_time, verbose, &
                 if (istat /= NF90_NOERR) call error_handler &
                            ('setting NetCDF4 compression: '//trim(Vars(ivar)%name), ncode=istat)
             endif
-            
+
             ! copy variable attributes
             do i=1,NF90_MAX_NAME; cell_methods(i:i) = ' '; enddo
             do i=1,NF90_MAX_NAME; name_bnds   (i:i) = ' '; enddo
-            do attnum = 1, Vars(ivar)%natt 
+            do attnum = 1, Vars(ivar)%natt
                istat = NF90_INQ_ATTNAME (ncid_in, ivar, attnum, attname)
                if (istat /= NF90_NOERR) call error_handler (ncode=istat)
                if (trim(attname) == 'time_avg_info') then
@@ -462,7 +462,7 @@ namelist /input/   file_names, file_name_out, use_end_time, verbose, &
                    if (istat /= NF90_NOERR) call error_handler &
                         ('copying attribute for variable '//trim(Vars(ivar)%name), ncode=istat)
                endif
-            enddo   
+            enddo
             !--- when necessary create time average attributes for all variables ---
             if (Vars(ivar)%static) cycle
             if (trim(Vars(ivar)%name) == trim(name_time_bounds)) cycle
@@ -496,8 +496,8 @@ namelist /input/   file_names, file_name_out, use_end_time, verbose, &
                                   'time_avg_info', trim(tavg_info_string))
             if (istat /= NF90_NOERR) call error_handler ('creating attribute '// &
                     'time_avg_info for variable '//trim(Vars(ivar)%name), ncode=istat)
-               
-         enddo   
+
+         enddo
 
         ! extract time units from time axis units attribute
          nca = len_trim(time_att_units)
@@ -929,7 +929,7 @@ namelist /input/   file_names, file_name_out, use_end_time, verbose, &
      istat = NF90_CLOSE (ncid_in)
      if (istat /= NF90_NOERR) call error_handler (ncode=istat)
 
- enddo 
+ enddo
 !---------------- end of input file (ifile) loop --------------------
 
 ! close output file
@@ -962,17 +962,17 @@ contains
 
 ! change string to all lower case
 
- function lowercase (cs) 
+ function lowercase (cs)
  character(len=*), intent(in) :: cs
- character(len=len(cs))       :: lowercase 
- character :: ca(len(cs)) 
+ character(len=len(cs))       :: lowercase
+ character :: ca(len(cs))
 
  integer, parameter :: co=iachar('a')-iachar('A') ! case offset
-    
-    ca = transfer(cs,"x",len(cs)) 
-    where (ca >= "A" .and. ca <= "Z") ca = achar(iachar(ca)+co) 
-    lowercase = transfer(ca,cs) 
-    
+
+    ca = transfer(cs,"x",len(cs))
+    where (ca >= "A" .and. ca <= "Z") ca = achar(iachar(ca)+co)
+    lowercase = transfer(ca,cs)
+
  end function lowercase
 
 !#######################################################################
@@ -1044,7 +1044,7 @@ contains
    !--- check shape of "time_bounds" ---
     if (trim(Var%name) == trim(name_time_bounds)) then
         if (Var%ndim > 1 .or. Var%shape(1) /= 2) then
-            if (.not.suppress_warnings) write (*,95) 
+            if (.not.suppress_warnings) write (*,95)
          95 format ('WARNING: wrong dimensions for time_bounds ... skipping')
             Var%skip = .true.
             return
@@ -1161,11 +1161,11 @@ contains
   endif
 
 ! get the first two time axis values
-  
+
   if (ntimes >= 2) then
      istat = NF90_INQ_VARID ( ncid, trim(tname), varid(1) )
      if (istat /= NF90_NOERR) call error_handler (ncode=istat)
-     istat = NF90_GET_VAR ( ncid, varid(1), times ) 
+     istat = NF90_GET_VAR ( ncid, varid(1), times )
      if (istat /= NF90_NOERR) call error_handler (ncode=istat)
      dt = times(2)-times(1)
   else
@@ -1231,7 +1231,7 @@ contains
   else
       period_out = ' ' ! unknown
   endif
-      
+
 
  end subroutine check_for_climo_avg
 
@@ -1286,7 +1286,7 @@ subroutine apply_compression_defaults (deflation_in, shuffle_in, deflation_out, 
         shuffle_out = user_shuffle
     endif
 
-    if (verbose > 1) then
+    if (verbose) then
         if (deflation_out > 0) then
             print *, 'Using deflation=', deflation_out, 'and shuffle=', shuffle_out
         else

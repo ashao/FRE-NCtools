@@ -248,13 +248,21 @@ char *usage[] = {
   "",
   NULL };
 
-const int REALISTIC         = 1;
-const int RECTANGULAR_BASIN = 2;
-const int GAUSSIAN          = 3;
-const int BOWL              = 4;
-const int IDEALIZED         = 5;
-const int BOX_CHANNEL       = 6;
-const int DOME              = 7;
+//const int REALISTIC         = 1;
+//const int RECTANGULAR_BASIN = 2;
+//const int GAUSSIAN          = 3;
+//const int BOWL              = 4;
+//const int IDEALIZED         = 5;
+//const int BOX_CHANNEL       = 6;
+//const int DOME              = 7;
+
+#define REALISTIC          1
+#define RECTANGULAR_BASIN  2
+#define GAUSSIAN           3
+#define BOWL               4
+#define IDEALIZED          5
+#define BOX_CHANNEL        6
+#define DOME               7
 
 char grid_version[] = "0.2";
 char tagname[] = "$Name: fre-nctools-bronx-10 $";
